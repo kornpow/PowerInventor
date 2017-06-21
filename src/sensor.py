@@ -21,6 +21,10 @@ import requests
 from flask import Flask
 
 
+import SimpleHTTPServer
+import SocketServer
+
+
 busNumber =  1 #int(os.getenv("I2C_BUS"))
 
 bus = smbus.SMBus(busNumber)
@@ -41,8 +45,8 @@ class WebServer():
     def __init__(self):
         self.app = Flask(__name__)
         self.app.run(host='0.0.0.0', port=80)
-
-    @app.route('/')
+        # @self.app.route('/')
+    
     def hello_world():
         return 'Hello World!'
 
@@ -198,6 +202,16 @@ if __name__ == "__main__":
     # threading.Thread(target=sql.check_event()).start()
 
     # threading.Thread(target=pca9555.LED_Pattern()).start()
+
+
+    PORT = 8000
+
+    Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
+
+    httpd = SocketServer.TCPServer(("", PORT), Handler)
+
+    print "serving at port", PORT
+    httpd.serve_forever()
     
     while True:
         pca9555.LED_Pattern()
