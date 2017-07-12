@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640">
+
+    <link rel="stylesheet" href="/static/core.css" media="screen">
+    <link rel="stylesheet" href="/static/mobile.css" media="handheld, only screen and (max-device-width:640px)">
+    <link rel="stylesheet" href="/static/github-light.css">
+    <link rel="stylesheet" href="/static/custom.css">
+
+
+
+    <script type="text/javascript" src="/static/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/headsmart.min.js"></script>
+
+    <!-- Paricle javascripts -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/particle-api-js/6.4.0/particle.min.js"></script>
+    
+
+	<script type="text/javascript" src="/static/login.js"></script>
+
+    <title>Growerapp by sako0938</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/sako0938/GrowerApp">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Growerapp</h1>
+            <h2></h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+       
+
+<h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h3>
+
+<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
+
+
+<!-- BEGIN ONLINE STATUS -->
+<div id="online_status">
+<h1> Online Status </h1>
+<br/>
+<div class="status" id="online">Logged In?</div>
+<br/><br/>	
+<input id="particle_user">Username</input>
+<br/>
+<input id="particle_pass">Password</input>
+<br/>
+<button id="login"> Login </button>
+
+<br/><br/>
+
+<div id="avail_devs">
+<h1> Available Devices </h1S>
+<br/>
+<div id="devlist">
+	<p> NONE! </p>
+</div>
+</div> 
+
+<br/>
+</div> 
+<!-- END ONLINE STATUS -->
+
+<div id="relay_status">
+<h1>Relay Status </h1>
+<br/>
+  <div class="status" id="relay1">Relay 1</div>
+  <br/>
+  <div class="status" id="relay2">Relay 2</div>
+  <br/>
+  <div class="status" id="relay3">Relay 3</div>
+  <br/>
+  <div class="status" id="relay4">Relay 4</div>
+  <br/>
+
+  Click relay to toggle!
+</div>
+<br/><br/><br/>
+<form action="/v1/relays/set" method="post">
+  Relay Number: <input type="text" name="relay"><br>
+  Set (1) or Reset (0): <input type="text" name="sor"><br>
+  <input type="submit" value="Submit">
+</form>
+<br/>
+<br/>
+<br/>
+<form action="/v1/scheduler/add" method="post">
+  Relay Number: <input type="text" name="relay"><br>
+  Set (1) or Reset (0): <input type="text" name="sor"><br>
+  Hour: <input type="text" name="hour"><br>
+  Minute: <input type="text" name="minute"><br>
+  <input type="submit" value="Submit">
+</form>
+<!-- <br/><br/><br/>
+<div id="scheduler">
+<h2>Scheduler</h2>
+<br/>
+Relay to Change:
+<select id="relaynum">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+</select>
+<br/>
+Hour to turn ON:
+<input id="hon"/>
+<br/>
+Minute to turn ON:
+<input id="mon"/>
+<br/>
+Hour to turn OFF:
+<input id="hoff"/>
+<br/>
+Minute to turn OFF:
+<input id="moff"/>
+<br/>
+<button class="schedule" id="add" type="button">Add to Schedule!</button>
+</div> -->
+
+<div>
+<h1> Weather Tracker </h1>
+<br/>
+<button class="weather"> Update Weather! </button>
+<p> Temperature (F) </p>
+<p id="tempf">???? </p>
+<br/>
+<p> Humidity (0-100%)
+<p id="humidity">???? </p>
+<br/>
+<p> Light Intensity (0-4096) </p>
+<p id="light">???? </p>
+
+</div>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/sako0938">sako0938</a> can be found on <a href="https://github.com/sako0938/GrowerApp">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="https://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
