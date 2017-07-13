@@ -20,7 +20,8 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/particle-api-js/6.4.0/particle.min.js"></script>
     
 
-	<script type="text/javascript" src="/static/login.js"></script>
+	<!-- <script type="text/javascript" src="/static/login.js"></script> -->
+  <script type="text/javascript" src="/static/client.js"></script>
 
     <title>Growerapp by sako0938</title>
   </head>
@@ -94,21 +95,22 @@
   Click relay to toggle!
 </div>
 <br/><br/><br/>
-<form action="/v1/relays/set" method="post">
-  Relay Number: <input type="text" name="relay"><br>
+<!-- <form> -->
+  Relay Number: <input type="text" id="set_num"/><br>
+  Set (1) or Reset (0): <input type="text" name="sor"/><br>
+  <button id="toggle-relay"> Submit</button>
+<!-- </form> -->
+<br/>
+<br/>
+<p id="debug_string">No Change </p>
+<br/>
+<!-- <form> -->
+  Relay Number: <input type="text" name="relay2"><br>
   Set (1) or Reset (0): <input type="text" name="sor"><br>
-  <input type="submit" value="Submit">
-</form>
-<br/>
-<br/>
-<br/>
-<form action="/v1/scheduler/add" method="post">
-  Relay Number: <input type="text" name="relay"><br>
-  Set (1) or Reset (0): <input type="text" name="sor"><br>
-  Hour: <input type="text" name="hour"><br>
-  Minute: <input type="text" name="minute"><br>
-  <input type="submit" value="Submit">
-</form>
+  Hour: <input type="text" name="hour"/><br>
+  Minute: <input type="text" name="minute"/><br>
+  <button id="AddToSchedule">Submit</button>
+<!-- </form> -->
 <!-- <br/><br/><br/>
 <div id="scheduler">
 <h2>Scheduler</h2>

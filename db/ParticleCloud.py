@@ -1,11 +1,11 @@
 import requests
 
 class Controller():
-	def __init__(self,name="GrowerApp"):
+	def __init__(self,name="DadSwitch"):
 		self.client_id = "powerinventor-2954"
 		self.client_secret = "3e5e4bd2846a2109a171a5f7a5a23e81a95bbb09"
 		self.target_name = name
-		self.target_did = 0
+		self.target_id = 0
 		self.at = 0
 	
 
@@ -36,6 +36,7 @@ class Controller():
 
 	def relay_set(self,relay,onoff):
 		#Set relay to a value
+		print 
 		print "setting relay " + str(relay) +  "with value " + str(onoff)
 		if onoff == 0:
 			print "Turning off relay "+ str(relay)

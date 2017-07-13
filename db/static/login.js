@@ -316,8 +316,19 @@ $(document).on('click',".status", function() {
 
 });
 
+$("#toggle-relay").click(function(e) {
+	// $("#debug_string").html("Clicked");
+	alert("test")
+	// $.get("/SetRelay", {"relay": $("input[id='relay']").val()})
+	// .done(function(string) {
+	// // $("#the-string input").val(string);
+	// $("#debug_string").text("Finished");
+	// });
+	// // e.preventDefault();
+});
+
 
 $(document).ready(function() {
-  GetRelayStatus(true);
-  UpdateWeather(true);
+	// GetRelayStatus(true);
+	// UpdateWeather(true);
 });
