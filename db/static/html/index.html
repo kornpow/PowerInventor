@@ -21,7 +21,7 @@
     
 
 	<!-- <script type="text/javascript" src="/static/login.js"></script> -->
-  <script type="text/javascript" src="/static/client.js"></script>
+  <script type="text/javascript" src="/static/javascripts/client.js"></script>
 
     <title>Growerapp by sako0938</title>
   </head>
@@ -96,8 +96,8 @@
 </div>
 <br/><br/><br/>
 <!-- <form> -->
-  Relay Number: <input type="text" id="set_num"/><br>
-  Set (1) or Reset (0): <input type="text" name="sor"/><br>
+  Relay Number: <input type="text" id="in_relay_set"/><br>
+  Set (1) or Reset (0): <input type="text" id="in_val_set"/><br>
   <button id="toggle-relay"> Submit</button>
 <!-- </form> -->
 <br/>
@@ -105,11 +105,20 @@
 <p id="debug_string">No Change </p>
 <br/>
 <!-- <form> -->
-  Relay Number: <input type="text" name="relay2"><br>
-  Set (1) or Reset (0): <input type="text" name="sor"><br>
-  Hour: <input type="text" name="hour"/><br>
-  Minute: <input type="text" name="minute"/><br>
-  <button id="AddToSchedule">Submit</button>
+  Relay Number: <input type="text" id="in_relay_sch"><br>
+  Set (1) or Reset (0): <input type="text" id="in_val_sch"><br>
+  Hour: <input type="text" id="in_hour_sch"/><br>
+  Minute: <input type="text" id="in_min_sch"/><br>
+  <button id="add-to-schedule">Submit</button>
+
+
+<h2> Currently Scheduled Tasks </h2>
+<button id="check-schedule">Check!</button>
+<p> Key: Hour,Min,RelayNumber,OnOff </p>
+<table id="schedule-table" style="width:100%">
+</table>
+<div id="schedule-list">
+</div>
 <!-- </form> -->
 <!-- <br/><br/><br/>
 <div id="scheduler">

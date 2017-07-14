@@ -19,7 +19,7 @@ class Scheduler:
 
 	def create_table(self,dbname):
 		print "creating"
-		conn = sqlite3.connect('/home/skorn/Documents/GrowerApp/db/' + str(dbname) )
+		conn = sqlite3.connect(os.getcwd() + dbname)
 
 		c = conn.cursor()
 		#Create table
@@ -27,22 +27,22 @@ class Scheduler:
 			(hour integer, minute integer ,outlet integer, onoff integer)''')
 		conn.commit()
 
-	def add_to_table(self,hour,min,outlet,onoff):
-		conn = sqlite3.connect('GrowerApp.db')
-
+	def add_to_table(self,hour,minute,outlet,onoff):
+		conn = sqlite3.connect(os.getcwd() + 'GrowerApp.db')
+		print "Adding value to tasklist"
 		c = conn.cursor()
-		pack = (hour,min,outlet,onoff)
+		pack = (hour,minute,outlet,onoff)
 		c.execute("INSERT INTO schedule VALUES (?, ?, ?, ?)", pack )
 		conn.commit()
 
 	def print_table(self):
-		conn = sqlite3.connect('GrowerApp.db')
+		conn = sqlite3.connect(os.getcwd() + 'GrowerApp.db')
 		c = conn.cursor()
 		for row in c.execute('SELECT * FROM schedule ORDER BY hour'):
 	        	print row
 
 	def check_event(self,ctl):
-		conn = sqlite3.connect('/home/skorn/Documents/GrowerApp/db/GrowerApp.db')
+		conn = sqlite3.connect(os.getcwd() + 'GrowerApp.db')
 		c = conn.cursor()
 		t = time.localtime()
 		chour = t[3]
@@ -75,7 +75,7 @@ class Scheduler:
 		# subprocess.call(["curl", "https://api.particle.io/v1/devices/3f003b000447343337373739/set","-d", "arg=\"2\"","-d", "access_token=ef123bf1c94947efc8523b7d16eda5a3a2ef6eff"])
 
 	def remove_event(self,hour,mins):
-		conn = sqlite3.connect('GrowerApp.db')
+		conn = sqlite3.connect(os.getcwd() + 'GrowerApp.db')
 		c = conn.cursor()
 		c.execute('DELETE FROM schedule WHERE hour=? AND minute=?',(hour,mins))
 		conn.commit()

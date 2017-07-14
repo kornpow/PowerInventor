@@ -1,7 +1,7 @@
 import requests
 
 class Controller():
-	def __init__(self,name="DadSwitch"):
+	def __init__(self,name="GrowerApp"):
 		self.client_id = "powerinventor-2954"
 		self.client_secret = "3e5e4bd2846a2109a171a5f7a5a23e81a95bbb09"
 		self.target_name = name
