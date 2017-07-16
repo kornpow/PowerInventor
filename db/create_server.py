@@ -41,6 +41,7 @@ class CherryServer():
 
 	@cherrypy.expose
 	def index(self):
+		# return "Hello world"
 		raise cherrypy.HTTPRedirect("/static")
 
 	@cherrypy.expose
@@ -107,6 +108,7 @@ if __name__ == '__main__':
 	t = threading.Thread(target=schedule_daemon)
 	t.daemon = True
 	t.start()
+	cherrypy.config.update({'server.socket_host': '0.0.0.0'})      
 	cherrypy.quickstart(CherryServer(),'/',conf)
 
 
