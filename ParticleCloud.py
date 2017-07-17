@@ -36,7 +36,6 @@ class Controller():
 
 	def relay_set(self,relay,onoff):
 		#Set relay to a value
-		print 
 		print "setting relay " + str(relay) +  "with value " + str(onoff)
 		if onoff == 0:
 			print "Turning off relay "+ str(relay)
@@ -49,6 +48,24 @@ class Controller():
 
 		data = r.json()
 		print data
+
+	def relay_status(self):
+		status = {"relay1":0,"relay2":0,"relay3":0,"relay4":0}
+		header = {'Authorization':'Bearer %s'%self.at}
+		r = requests.get('https://api.particle.io/v1/devices/%s/rpack' % self.target_id, headers=header)
+		data = r.json()
+		print data['result']
+		packedData = int(data['result'])
+		print packedData
+		if packedData & 0x1 > 0:
+			status["relay1"] = 1
+		if packedData & 0x2 > 0:
+			status["relay2"] = 1
+		if packedData & 0x4 > 0:
+			status["relay3"] = 1
+		if packedData & 0x8 > 0:
+			status["relay4"] = 1
+		return status
 
 	def logout(self):
 		r = requests.delete('https://api.particle.io/v1/access_tokens/' + str(self.at) ,auth=('korn94sam@gmail.com','sksk9494??'))

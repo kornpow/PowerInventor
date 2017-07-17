@@ -10,6 +10,8 @@ import threading
 import ParticleCloud
 import scheduler
 
+import logging
+
 # from flask import Flask, render_template, request
 import cherrypy
 import json
@@ -47,24 +49,15 @@ class CherryServer():
 	@cherrypy.expose
 	@cherrypy.tools.json_out() 
 	def SetRelay(self,relay,val):
-		# relay_target = request.form['relay']
-		# relay_state = request.form['sor']
-		print relay
-		print val
+		logging.debug('SetRelay Call: Relay: %d, Val: %d' % (int(relay), int(val) ) )
 
-		print "Inside setrelay"
 		growerapp.relay_set(int(relay),int(val) )
 		return json.dumps({"response" : "1"})
 
 	@cherrypy.expose
 	@cherrypy.tools.json_out() 
 	def AddTask(self,relay,val,hour,minute):
-		
-		print relay
-		print val
-		print hour
-		print minute
-
+		logging.debug('AddTask Call: Relay: %d, Val: %d, Hour: %d, Minute: %d' % (int(relay), int(val), int(hour), int(minute) ) )
 
 		tasklist.add_to_table(int(hour),int(minute),int(relay),int(val) )
 
@@ -79,6 +72,12 @@ class CherryServer():
 
 		return responseJSON
 
+	@cherrypy.expose
+	@cherrypy.tools.json_out() 
+	def GetRelayStatus(self):
+		data = growerapp.relay_status()
+		logging.debug('GetRelayStatus Call: Data: %s' % str(data) )
+		return data
 #Start flask webservice
 # app = Flask(__name__,static_url_path='/static')
 
@@ -101,6 +100,8 @@ class CherryServer():
 
 
 if __name__ == '__main__':
+	logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
 	tasklist = scheduler.Scheduler()
 	growerapp = ParticleCloud.Controller()
 	growerapp.login()
@@ -108,7 +109,7 @@ if __name__ == '__main__':
 	t = threading.Thread(target=schedule_daemon)
 	t.daemon = True
 	t.start()
-	cherrypy.config.update({'server.socket_host': '0.0.0.0'})      
+	cherrypy.config.update({'server.socket_host': '127.0.0.1','server.socket_port': 8080})      
 	cherrypy.quickstart(CherryServer(),'/',conf)
 
 

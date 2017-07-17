@@ -1,4 +1,50 @@
+var red = "rgb(255, 0, 0)";
+var green = "rgb(0, 128, 0)";
+var blue = "rgb(20, 23, 204)";
+
+function GetRelayStatus() {
+	setTimeout(function() {GetRelayStatus(); }, 2000);
+
+	dataToSend = {};
+			urlToSend = "/GetRelayStatus";
+			$.ajax({ 
+				type: "GET",
+				url: urlToSend,
+				data: dataToSend,
+				dataType: "json"
+			}).done(function(data) {
+				$('#debug_string').text("Finished");
+				// alert("relay1: " + data["relay1"] + " relay2: " + data["relay2"] + " relay3" + data["relay3"] + " relay4: " + data["relay4"]);
+				if(data["relay1"] == 1) {
+					$('.status#relay1').css('background-color',green);
+				}
+				else {
+					$('.status#relay1').css('background-color',red);
+				}
+				if(data["relay2"] == 1) {
+					$('.status#relay2').css('background-color',green);
+				}
+				else {
+					$('.status#relay2').css('background-color',red);
+				}
+				if(data["relay3"] == 1) {
+					$('.status#relay3').css('background-color',green);
+				}
+				else {
+					$('.status#relay3').css('background-color',red);
+				}
+				if(data["relay4"] == 1) {
+					$('.status#relay4').css('background-color',green);
+				}
+				else {
+					$('.status#relay4').css('background-color',red);
+				}
+			});
+}
+
 $(document).ready(function() {
+	GetRelayStatus();
+
 	$("#toggle-relay").click(function(e) {
 		$("#debug_string").html("Clicked");
 		console.log($('#in_relay_set').val())
@@ -12,7 +58,7 @@ $(document).ready(function() {
 			data: dataToSend,
 			dataType: "json"
 		}).done(function(data) {
-			alert("fuck! " + data );
+			// alert("fuck! " + data );
 			console.log("fuck")
 			$('#debug_string').text("Finished");
 		});
@@ -33,7 +79,7 @@ $(document).ready(function() {
 			data: dataToSend,
 			dataType: "json"
 		}).done(function(data) {
-			console.log("fuck")
+			// console.log("fuck")
 			$('#debug_string').text("Finished");
 		});
 		// e.preventDefault();
@@ -49,8 +95,8 @@ $(document).ready(function() {
 			data: dataToSend,
 			dataType: "json"
 		}).done(function(data) {
-			alert("fuck! " + data["0"] );
-			console.log("fuck")
+			// alert("fuck! " + data["0"] );
+			// console.log("fuck")
 			$('#schedule-list').empty();
 			$('#debug_string').text("Finished");
 			$.each(data,function(key,val){
@@ -59,5 +105,8 @@ $(document).ready(function() {
 			
 		});
 		// e.preventDefault();
-	})
+	});
+	$("#get-status").click(function(e) {
+		GetRelayStatus();
+	});
 });
