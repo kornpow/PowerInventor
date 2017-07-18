@@ -7,6 +7,7 @@ class Controller():
 		self.target_name = name
 		self.target_id = 0
 		self.at = 0
+		self.devices = {}
 	
 
 
@@ -22,6 +23,18 @@ class Controller():
 		self.at = data["access_token"]
 		print self.at
 
+		# #List devices
+		# header = {'Authorization':'Bearer %s'%self.at}
+		# r = requests.get('https://api.particle.io/v1/devices', \
+		# 	headers=header)
+		# data = r.json()
+		# print len(data)
+		# for w in xrange(0,len(data)):
+		# 	if(data[w]['connected'] == True and data[w]['name'] == self.target_name):
+		# 		print data[w]['name'] + " " + data[w]['id']
+		# 		self.target_id = data[w]['id']
+
+	def getDeviceList(self):
 		#List devices
 		header = {'Authorization':'Bearer %s'%self.at}
 		r = requests.get('https://api.particle.io/v1/devices', \
@@ -29,10 +42,18 @@ class Controller():
 		data = r.json()
 		print len(data)
 		for w in xrange(0,len(data)):
-			if(data[w]['connected'] == True and data[w]['name'] == self.target_name):
+			if(data[w]['connected'] == True):
 				print data[w]['name'] + " " + data[w]['id']
+				self.devices[data[w]['name']] = data[w]['id']
 				self.target_id = data[w]['id']
 
+		print self.devices
+		return self.devices
+
+	def setCurrentDevice(self,name):
+		self.target_name = name;
+		self.target_id = self.devices[self.target_name]
+		return self.target_name
 
 	def relay_set(self,relay,onoff):
 		#Set relay to a value

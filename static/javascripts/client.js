@@ -3,7 +3,7 @@ var green = "rgb(0, 128, 0)";
 var blue = "rgb(20, 23, 204)";
 
 function GetRelayStatus() {
-	setTimeout(function() {GetRelayStatus(); }, 2000);
+	setTimeout(function() {GetRelayStatus(); }, 5000);
 
 	dataToSend = {};
 			urlToSend = "/GetRelayStatus";
@@ -100,7 +100,7 @@ $(document).ready(function() {
 			$('#schedule-list').empty();
 			$('#debug_string').text("Finished");
 			$.each(data,function(key,val){
-				$('#schedule-list').append("<p>"+val+"</p>")
+				$('#schedule-list').append("<p>"+key+"</p>")
 			})
 			
 		});
@@ -109,4 +109,61 @@ $(document).ready(function() {
 	$("#get-status").click(function(e) {
 		GetRelayStatus();
 	});
+	$("#show-devices").click(function(e) {
+		$("#debug_string").html("Clicked");
+		$("#relay-status").hide();
+		$("#relay-controls").hide();
+		$("#sensor-data").hide();
+
+		dataToSend = {};
+		urlToSend = "/ShowDevices";
+		$.ajax({ 
+			type: "GET",
+			url: urlToSend,
+			data: dataToSend,
+			dataType: "json"
+		}).done(function(data) {
+			console.log(data)
+			$("#devlist").empty();
+			$("#debug_string").text("Finished");
+			$.each(data,function(key,val){
+				$("#devlist").append("<div class=\"status device\">"+key+"</div><br/>")
+			})
+		});
+		});
+	$("div.status.device:not(.selected)").live("click",function(e) {
+		$("div.status.device").css("background-color",red);
+		$(this).css("background-color",blue);
+		console.log("clicked");
+		$("#select-device-btn").show();
+	});
+	$("#select-device-btn").click(function() {
+		$("div.status.device").each(function(index) {
+			if($(this).css("background-color") == blue) {
+					$(this).css("background-color",green);
+					$(this).addClass("selected");
+
+					dataToSend = {"name":$(this).text()};
+					urlToSend = "/SelectDevice";
+					$.ajax({ 
+						type: "GET",
+						url: urlToSend,
+						data: dataToSend,
+						dataType: "json"
+					}).done(function(data) {
+						GetRelayStatus()
+						$("div.status.device:not(.selected)").remove();
+						$("#relay-status").show();
+						$("#relay-controls").show();
+						$("#sensor-data").show();
+						$("#select-device-btn").hide();
+
+					});
+			}
+		});
+	});
+	$("#relay-status").hide();
+	$("#relay-controls").hide();
+	$("#sensor-data").hide();
+	$("#select-device-btn").hide();
 });

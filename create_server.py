@@ -78,6 +78,23 @@ class CherryServer():
 		data = growerapp.relay_status()
 		logging.debug('GetRelayStatus Call: Data: %s' % str(data) )
 		return data
+
+	@cherrypy.expose
+	@cherrypy.tools.json_out() 
+	def ShowDevices(self):
+		responseData = growerapp.getDeviceList()
+		responseJSON = {}
+
+		# for i in xrange(0,len(responseData)):
+		# 	responseJSON.update({i:responseData[i]})
+
+		return responseData
+
+	@cherrypy.expose
+	@cherrypy.tools.json_out() 
+	def SelectDevice(self,name):
+		rname = growerapp.setCurrentDevice(name)
+		logging.debug('SelectDevice Call: Data: %s' % str(rname) )
 #Start flask webservice
 # app = Flask(__name__,static_url_path='/static')
 
@@ -106,9 +123,9 @@ if __name__ == '__main__':
 	growerapp = ParticleCloud.Controller()
 	growerapp.login()
 	
-	t = threading.Thread(target=schedule_daemon)
-	t.daemon = True
-	t.start()
+	# t = threading.Thread(target=schedule_daemon)
+	# t.daemon = True
+	# t.start()
 	cherrypy.config.update({'server.socket_host': '0.0.0.0','server.socket_port': 80})      
 	cherrypy.quickstart(CherryServer(),'/',conf)
 
