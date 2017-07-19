@@ -48,10 +48,10 @@ class CherryServer():
 
 	@cherrypy.expose
 	@cherrypy.tools.json_out() 
-	def SetRelay(self,relay,val):
-		logging.debug('SetRelay Call: Relay: %d, Val: %d' % (int(relay), int(val) ) )
+	def SetRelay(self,devname,relay,val):
+		logging.debug('SetRelay Call: Devname: %s Relay: %d, Val: %d' % (devname,int(relay), int(val) ) )
 
-		growerapp.relay_set(int(relay),int(val) )
+		growerapp.relay_set(int(relay),int(val),devname )
 		return json.dumps({"response" : "1"})
 
 	@cherrypy.expose

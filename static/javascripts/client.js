@@ -3,7 +3,7 @@ var green = "rgb(0, 128, 0)";
 var blue = "rgb(20, 23, 204)";
 
 function GetRelayStatus() {
-	// setTimeout(function() {GetRelayStatus(); }, 5000);
+	setTimeout(function() {GetRelayStatus(); }, 5000);
 
 	dataToSend = {};
 			urlToSend = "/GetRelayStatus";
@@ -49,6 +49,7 @@ $(document).ready(function() {
 		$("#debug_string").html("Clicked");
 		relaynum = 0
 		toggledir = -1
+		device = $(".device.status.selected").text();
 		$("#relay-controls").find(".check-relay").each(function(index) {
 			if($(this).prop("checked") == true) {
 				console.log($(this).val());
@@ -61,7 +62,7 @@ $(document).ready(function() {
 				toggledir = $(this).val()
 			} 		
 		})
-		dataToSend = {'relay': relaynum, 'val': toggledir };
+		dataToSend = {'devname': device,'relay': relaynum, 'val': toggledir };
 		urlToSend = "/SetRelay";
 		alert("alive")
 		$.ajax({ 
