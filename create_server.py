@@ -35,7 +35,7 @@ def schedule_daemon():
 		event = tasklist.check_event()
 		if event != None:
 			print "Theres an event!"
-			growerapp.relay_set(event[0],event[1])
+			growerapp.relay_set(event[0],event[1],event[2])
 
 		time.sleep(10)
 
@@ -56,21 +56,23 @@ class CherryServer():
 
 	@cherrypy.expose
 	@cherrypy.tools.json_out() 
-	def AddTask(self,relay,val,hour,minute):
+	def AddTask(self,devname,relay,val,hour,minute):
 		logging.debug('AddTask Call: Relay: %d, Val: %d, Hour: %d, Minute: %d' % (int(relay), int(val), int(hour), int(minute) ) )
 
-		tasklist.add_to_table(int(hour),int(minute),int(relay),int(val) )
+		tasklist.add_to_table(devname,int(hour),int(minute),int(relay),int(val) )
 
 	@cherrypy.expose
 	@cherrypy.tools.json_out() 
-	def PrintSchedule(self):
-		responseData = tasklist.print_table()
-		responseJSON = {}
+	def PrintSchedule(self,devname):
+		responseData = tasklist.print_dev_table(devname)
+		responsedata = []
+		html = "<tr> <th> Hour </th> <th> Min </th> <th> Relay </th> <th> Val </th> </tr>"
 
 		for i in xrange(0,len(responseData)):
-			responseJSON.update({i:responseData[i]})
+			html = html + "<tr> <th>" + str(responseData[i][0]) + "</th> <th>" + str(responseData[i][1]) + "</th> <th>" + str(responseData[i][2]) + "</th> <th>" + str(responseData[i][3])
 
-		return responseJSON
+		html = html + "</tr>"
+		return html
 
 	@cherrypy.expose
 	@cherrypy.tools.json_out() 
@@ -123,9 +125,9 @@ if __name__ == '__main__':
 	growerapp = ParticleCloud.Controller()
 	growerapp.login()
 	
-	# t = threading.Thread(target=schedule_daemon)
-	# t.daemon = True
-	# t.start()
+	t = threading.Thread(target=schedule_daemon)
+	t.daemon = True
+	t.start()
 	cherrypy.config.update({'server.socket_host': '0.0.0.0','server.socket_port': 80})      
 	cherrypy.quickstart(CherryServer(),'/',conf)
 

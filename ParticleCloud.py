@@ -55,16 +55,17 @@ class Controller():
 		self.target_id = self.devices[self.target_name]
 		return self.target_name
 
-	def relay_set(self,relay,onoff):
+	def relay_set(self,relay,onoff,devname):
 		#Set relay to a value
 		print "setting relay " + str(relay) +  "with value " + str(onoff)
 		if onoff == 0:
 			print "Turning off relay "+ str(relay)
 			relay = relay + 10
-
+		print "Toggling relays for device" + str(devname)
+		did = self.devices[devname]
 		payload = {'arg': str(relay)}
 		header = {'Authorization':'Bearer %s'%self.at}
-		r = requests.post('https://api.particle.io/v1/devices/%s/set' %self.target_id, \
+		r = requests.post('https://api.particle.io/v1/devices/%s/set' %did, \
 			headers=header, data=payload)
 
 		data = r.json()
