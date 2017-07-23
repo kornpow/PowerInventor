@@ -1,9 +1,11 @@
 import requests
+import os
 
 class Controller():
 	def __init__(self,name="GrowerApp"):
-		self.client_id = "powerinventor-2954"
-		self.client_secret = "3e5e4bd2846a2109a171a5f7a5a23e81a95bbb09"
+		print os.environ
+		self.client_id = os.environ["ParticleCID"]
+		self.client_secret = os.environ["ParticleSecret"]
 		self.target_name = name
 		self.target_id = 0
 		self.at = 0
@@ -13,8 +15,8 @@ class Controller():
 
 	def login(self):
 		#Login to Particle using OAuth
-		payload = {'grant_type': 'password', 'username': 'korn94sam@gmail.com',
-		'password':'sksk9494??','expires_in':'0'}
+		payload = {'grant_type': 'password', 'username': os.environ["ParticleEmail"],
+		'password': os.environ["ParticlePass"],'expires_in':'0'}
 
 		r = requests.post('https://api.particle.io/oauth/token', \
 			auth=(self.client_id, self.client_secret),data=payload)
