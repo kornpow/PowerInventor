@@ -4,6 +4,8 @@ echo "Setting time zone to ${TIMEZONE=UTC}"
 echo "${TIMEZONE}" > /etc/timezone
 dpkg-reconfigure tzdata
 
+cd src
 python create_server.py
+
 
 date

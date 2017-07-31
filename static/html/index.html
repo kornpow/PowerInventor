@@ -11,6 +11,11 @@
   <link rel="stylesheet" href="/static/github-light.css">
   <link rel="stylesheet" href="/static/custom.css">
 
+  <!-- google login things start -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="1081670705545-kvb9c04arl3qe3o4gvt4o37ko3mftkmj.apps.googleusercontent.com">
+
+  <!-- google login things end -->
 
 
   <script type="text/javascript" src="/static/modernizr.js"></script>
@@ -21,7 +26,7 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/particle-api-js/6.4.0/particle.min.js"></script>
 
 
-  <!-- <script type="text/javascript" src="/static/login.js"></script> -->
+  <script type="text/javascript" src="/static/javascripts/google_login.js"></script>
   <script type="text/javascript" src="/static/javascripts/client.js"></script>
 
   <title>Growerapp by sako0938</title>
@@ -56,7 +61,9 @@
 
         <p> Test 1 </p>
         <!-- BEGIN ONLINE STATUS -->
-        <div id="online_status">
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <a href="#" onclick="signOut();">Sign out</a>
+ <!--        <div id="online_status">
           <h1> Online Status </h1>
           <br/>
           <div class="status" id="online">Logged In?</div>
@@ -68,6 +75,7 @@
           <button id="login"> Login </button>
 
           <br/><br/>
+        </div>  -->
 
           <div id="avail_devs">
             <h1> Available Devices </h1S>
@@ -82,7 +90,7 @@
            </div> 
 
            <br/>
-         </div> 
+       
          <!-- END ONLINE STATUS -->
          <!-- Begin Relay Status -->
          <div id="relay-status">
@@ -122,6 +130,8 @@
           
            
           <h2> Relay Scheduler </h2>
+          <input class="check-remove" type="checkbox" id="check-remove" value="1">Remove?
+          <br/>
           <input class="check-schedule" type="checkbox" id="check-relay1" value="1">Relay 1
           <input class="check-schedule" type="checkbox" id="check-relay2" value="2">Relay 2
           <input class="check-schedule" type="checkbox" id="check-relay3" value="3">Relay 3

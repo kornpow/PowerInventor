@@ -49,6 +49,7 @@ $(document).ready(function() {
 		$("#debug_string").html("Clicked");
 		relaynum = 0
 		toggledir = -1
+
 		device = $(".device.status.selected").text();
 		$("#relay-controls").find(".check-relay").each(function(index) {
 			if($(this).prop("checked") == true) {
@@ -80,6 +81,7 @@ $(document).ready(function() {
 		device = $(".device.status.selected").text();
 		relaynum = 0
 		toggledir = -1
+		remove = $(".check-remove").prop("checked")
 		$("#relay-controls").find(".check-schedule").each(function(index) {
 			if($(this).prop("checked") == true) {
 				console.log($(this).val());
@@ -94,19 +96,34 @@ $(document).ready(function() {
 		})
 		console.log($('#in_hour_sch').val())
 		console.log($('#in_min_sch').val())
-		dataToSend = {'devname': device, 'relay': relaynum, 'val': toggledir,'hour':$("#in_hour_sch").val(),'minute':$("#in_min_sch").val() };
-		urlToSend = "/AddTask";
-		alert("alive")
-		$.ajax({ 
-			type: "GET",
-			url: urlToSend,
-			data: dataToSend,
-			dataType: "json"
-		}).done(function(data) {
-			// console.log("fuck")
-			$('#debug_string').text("Finished");
-		});
-		// e.preventDefault();
+		if(remove == true) {
+			dataToSend = {'devname': device, 'hour':$("#in_hour_sch").val(),'minute':$("#in_min_sch").val() };
+			urlToSend = "/RemoveTask";
+			$.ajax({ 
+				type: "GET",
+				url: urlToSend,
+				data: dataToSend,
+				dataType: "json"
+			}).done(function(data) {
+				
+				$('#debug_string').text("Finished");
+			});
+			// e.preventDefault();
+		}
+		else {
+			dataToSend = {'devname': device, 'relay': relaynum, 'val': toggledir,'hour':$("#in_hour_sch").val(),'minute':$("#in_min_sch").val() };
+			urlToSend = "/AddTask";
+			$.ajax({ 
+				type: "GET",
+				url: urlToSend,
+				data: dataToSend,
+				dataType: "json"
+			}).done(function(data) {
+				$('#debug_string').text("Finished");
+			});
+			// e.preventDefault();		
+		}
+
 	});
 	$("#check-schedule").click(function(e) {
 		$("#debug_string").html("Clicked");
@@ -120,8 +137,6 @@ $(document).ready(function() {
 			data: dataToSend,
 			dataType: "html"
 		}).done(function(data) {
-			// alert("fuck! " + data["0"] );
-			// console.log("fuck")
 			$('#schedule-list').empty();
 			$('#debug_string').text("Finished");
 			// $.each(data,function(key,val){
@@ -181,7 +196,7 @@ $(document).ready(function() {
 						$("div.status.device:not(.selected)").remove();
 						$("#relay-status").show();
 						$("#relay-controls").show();
-						$("#sensor-data").show();
+						// $("#sensor-data").show();
 						$("#select-device-btn").hide();
 
 					});
@@ -200,8 +215,8 @@ $(document).ready(function() {
 	$('.radio-schedule').on('change', function() {
     	$('.radio-schedule').not(this).prop('checked', false);  
 	});
-	$("#relay-status").hide();
-	$("#relay-controls").hide();
-	$("#sensor-data").hide();
-	$("#select-device-btn").hide();
+	// $("#relay-status").hide();
+	// $("#relay-controls").hide();
+	// $("#sensor-data").hide();
+	// $("#select-device-btn").hide();
 });
